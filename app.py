@@ -15,7 +15,7 @@ CORS(app)
 # ============================================================
 # CONFIG — FRONT CARD
 # ============================================================
-FRONT_CARD_TEMPLATE_URL = "https://i.ibb.co/V6vxpJB/20260727-154752.jpg"
+FRONT_CARD_TEMPLATE_URL = "https://i.ibb.co/DDWxRn9X/20260806-134318.jpg"
 AGRISTACK_URL = "https://www.upfr.agristack.gov.in/farmer-registry-up/"
 
 TEMPLATE_W, TEMPLATE_H = 1559, 1009
@@ -53,7 +53,7 @@ FONT_BOLD_PATH = "Poppins-Bold.ttf"
 # ============================================================
 # CONFIG — BACK CARD
 # ============================================================
-BACK_CARD_TEMPLATE_URL = "https://i.ibb.co/mrWdkzbH/20260727-154905.jpg"
+BACK_CARD_TEMPLATE_URL = "https://i.ibb.co/mFdtrGbH/20260805-115827.jpg"
 
 BACK_TEMPLATE_W, BACK_TEMPLATE_H = 1537, 1023
 
