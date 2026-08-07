@@ -45,8 +45,8 @@ QR_SHIFT_Y = 25
 
 # Stretch QR width/height independently (pixels, template ke 1559x1009 scale mein).
 # + = badhega, - = ghategaa. Dono 0 rakhoge to QR perfect square rahega jaisa pehle tha.
-QR_STRETCH_W = 3   # QR ki WIDTH kam/zyada karne ke liye (left-right stretch)
-QR_STRETCH_H = -2   # QR ki HEIGHT kam/zyada karne ke liye (top-bottom stretch)
+QR_STRETCH_W = 15   # QR ki WIDTH kam/zyada karne ke liye (left-right stretch)
+QR_STRETCH_H = -5   # QR ki HEIGHT kam/zyada karne ke liye (top-bottom stretch)
 
 NAME_FONT_SIZE = 60
 LABEL_FONT_SIZE = 42
