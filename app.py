@@ -43,6 +43,11 @@ QR_PADDING = 0
 QR_SHIFT_X = 110
 QR_SHIFT_Y = 25
 
+# Stretch QR width/height independently (pixels, template ke 1559x1009 scale mein).
+# + = badhega, - = ghategaa. Dono 0 rakhoge to QR perfect square rahega jaisa pehle tha.
+QR_STRETCH_W = 0   # QR ki WIDTH kam/zyada karne ke liye (left-right stretch)
+QR_STRETCH_H = 0   # QR ki HEIGHT kam/zyada karne ke liye (top-bottom stretch)
+
 NAME_FONT_SIZE = 60
 LABEL_FONT_SIZE = 42
 FARMER_ID_FONT_SIZE = 70
@@ -467,12 +472,12 @@ def draw_centered_text(draw, box, text, size, bold=False, fill="#1A2238"):
     draw_text_in_box(draw, box, text, font, fill=fill)
 
 
-def make_qr(data_url, size):
+def make_qr(data_url, width, height):
     qr = qrcode.QRCode(border=1, box_size=10)
     qr.add_data(data_url)
     qr.make(fit=True)
     img = qr.make_image(fill_color="black", back_color="white").convert("RGB")
-    return img.resize((size, size), Image.LANCZOS)
+    return img.resize((width, height), Image.LANCZOS)
 
 
 def build_content_rows(has_aadhaar):
@@ -615,10 +620,12 @@ def build_front_card_image(pdf_bytes, farmer_id, aadhaar_number):
     draw_centered_text(draw, farmer_id_box, farmer_id, size=id_font_size, bold=True)
 
     qbw, qbh = qr_box[2] - qr_box[0], qr_box[3] - qr_box[1]
-    qr_size = min(qbw, qbh)
-    qr_img = make_qr(AGRISTACK_URL, qr_size)
-    qx = qr_box[0] + (qbw - qr_size) // 2 + int(QR_SHIFT_X * scale_x)
-    qy = qr_box[1] + (qbh - qr_size) // 2 + int(QR_SHIFT_Y * scale_y)
+    base_size = min(qbw, qbh)
+    qr_w = base_size + int(QR_STRETCH_W * scale_x)
+    qr_h = base_size + int(QR_STRETCH_H * scale_y)
+    qr_img = make_qr(AGRISTACK_URL, qr_w, qr_h)
+    qx = qr_box[0] + (qbw - qr_w) // 2 + int(QR_SHIFT_X * scale_x)
+    qy = qr_box[1] + (qbh - qr_h) // 2 + int(QR_SHIFT_Y * scale_y)
     template.paste(qr_img, (qx, qy))
 
     return template
