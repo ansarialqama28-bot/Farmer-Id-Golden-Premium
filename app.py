@@ -40,7 +40,7 @@ PHOTO_PADDING_TOP = 44
 PHOTO_PADDING_BOTTOM = 36
 
 QR_PADDING = 0
-QR_SHIFT_X = 95
+QR_SHIFT_X = 99
 QR_SHIFT_Y = 23
 
 # Stretch QR width/height independently (pixels, template ke 1559x1009 scale mein).
