@@ -1,7 +1,6 @@
 import os
 import re
 import io
-import requests
 import qrcode
 import pdfplumber
 from datetime import datetime
@@ -15,7 +14,10 @@ CORS(app)
 # ============================================================
 # CONFIG — FRONT CARD
 # ============================================================
-FRONT_CARD_TEMPLATE_URL = "https://i.ibb.co/DDWxRn9X/20260806-134318.jpg"
+# Template images ab imgbb se nahi, isi repository se load hote hain.
+# front_template.jpg / back_template.jpg ko app.py ke saath, usi folder mein rakhna.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONT_CARD_TEMPLATE_PATH = os.path.join(BASE_DIR, "front_template.jpg")
 AGRISTACK_URL = "https://www.upfr.agristack.gov.in/farmer-registry-up/"
 
 TEMPLATE_W, TEMPLATE_H = 1559, 1009
@@ -58,7 +60,7 @@ FONT_BOLD_PATH = "Poppins-Bold.ttf"
 # ============================================================
 # CONFIG — BACK CARD
 # ============================================================
-BACK_CARD_TEMPLATE_URL = "https://i.ibb.co/mFdtrGbH/20260805-115827.jpg"
+BACK_CARD_TEMPLATE_PATH = os.path.join(BASE_DIR, "back_template.jpg")
 
 BACK_TEMPLATE_W, BACK_TEMPLATE_H = 1537, 1023
 
@@ -564,8 +566,10 @@ def build_front_card_image(pdf_bytes, farmer_id, aadhaar_number):
 
     has_aadhaar = bool(aadhaar_number)
 
-    resp = requests.get(FRONT_CARD_TEMPLATE_URL, timeout=15)
-    template = Image.open(io.BytesIO(resp.content)).convert("RGB")
+    try:
+        template = Image.open(FRONT_CARD_TEMPLATE_PATH).convert("RGB")
+    except FileNotFoundError:
+        raise ValueError("Front card template image (front_template.jpg) not found in the repository")
 
     scale_x = template.width / TEMPLATE_W
     scale_y = template.height / TEMPLATE_H
@@ -634,8 +638,10 @@ def build_front_card_image(pdf_bytes, farmer_id, aadhaar_number):
 def build_back_card_image(pdf_bytes):
     data = extract_back_data(pdf_bytes)
 
-    resp = requests.get(BACK_CARD_TEMPLATE_URL, timeout=15)
-    template = Image.open(io.BytesIO(resp.content)).convert("RGB")
+    try:
+        template = Image.open(BACK_CARD_TEMPLATE_PATH).convert("RGB")
+    except FileNotFoundError:
+        raise ValueError("Back card template image (back_template.jpg) not found in the repository")
 
     scale_x = template.width / BACK_TEMPLATE_W
     scale_y = template.height / BACK_TEMPLATE_H
